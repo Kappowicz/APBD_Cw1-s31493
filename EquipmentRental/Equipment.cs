@@ -4,7 +4,7 @@ public abstract class Equipment
 {
     public enum Status
     {
-        None,
+        None = 0,
         Available,
         Rented,
     }
@@ -12,11 +12,11 @@ public abstract class Equipment
     public static int IndexOfEquipment;
 
     private static List<Equipment> Extension = new();
-    private string name;
-    private int id;
-    private Status status;
+    protected string name;
+    protected int id;
+    protected Status status;
     
-    Equipment(string name, Status status)
+    protected Equipment(string name, Status status)
     {
         this.id = IndexOfEquipment;
         IndexOfEquipment++;
@@ -43,5 +43,10 @@ public abstract class Equipment
                 Console.WriteLine(eq);
             }
         }
+    }
+
+    public override string ToString()
+    {
+        return $"Equipment qualified as {name} with unique id: {id} and status: {status}";
     }
 }
