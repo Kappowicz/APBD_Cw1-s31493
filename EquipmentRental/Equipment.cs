@@ -1,4 +1,4 @@
-namespace DefaultNamespace;
+namespace EquipmentRental;
 
 public abstract class Equipment
 {
@@ -7,28 +7,29 @@ public abstract class Equipment
         None = 0,
         Available,
         Rented,
+        InRepair,
     }
-    //used as an id of specific equipment
-    public static int IndexOfEquipment;
+    //used as an id of specific equipment, in the end should equal to length of _extensions list
+    public static int CurrentAmountOfEquipments;
 
-    private static List<Equipment> Extension = new();
-    protected string name;
-    protected int id;
-    protected Status status;
+    private static List<Equipment> _extension = new();
+    protected string Name;
+    protected readonly int Id;
+    protected Status ItemStatus;
     
-    protected Equipment(string name, Status status)
+    protected Equipment(string name, Status itemStatus)
     {
-        this.id = IndexOfEquipment;
-        IndexOfEquipment++;
-        this.name = name;
-        this.status = status;
+        this.Id = CurrentAmountOfEquipments;
+        CurrentAmountOfEquipments++;
+        this.Name = name;
+        this.ItemStatus = itemStatus;
         
-        Extension.Add(this);
+        _extension.Add(this);
     }
 
     public static void PrintExtension()
     {
-        foreach (var eq in Extension)
+        foreach (var eq in _extension)
         {
             Console.WriteLine(eq);
         }
@@ -36,9 +37,9 @@ public abstract class Equipment
     
     public static void PrintExtension(Status requiredStatus)
     {
-        foreach (var eq in Extension)
+        foreach (var eq in _extension)
         {
-            if (eq.status == requiredStatus)
+            if (eq.ItemStatus == requiredStatus)
             {
                 Console.WriteLine(eq);
             }
@@ -47,6 +48,6 @@ public abstract class Equipment
 
     public override string ToString()
     {
-        return $"Equipment qualified as {name} with unique id: {id} and status: {status}";
+        return $"Equipment qualified as {Name} with unique id: {Id} and status: {ItemStatus}";
     }
 }
