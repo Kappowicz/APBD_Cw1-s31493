@@ -6,6 +6,12 @@ public class Laptop : Equipment
     private int _amountOfRamGB;
     public Laptop(string name, Status status, string processorName, int amountOfRamGB) : base(name, status)
     {
+        if (string.IsNullOrWhiteSpace(processorName))
+            throw new ArgumentException("Processor name cannot be empty!");
+        
+        if (amountOfRamGB <= 0)
+            throw new ArgumentException("Laptop can't have no ram!");
+        
         this._processorName = processorName;
         this._amountOfRamGB = amountOfRamGB;
     }

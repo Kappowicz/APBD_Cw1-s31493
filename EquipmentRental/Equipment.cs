@@ -19,11 +19,16 @@ public abstract class Equipment
     
     protected Equipment(string name, Status itemStatus)
     {
-        this.Id = CurrentAmountOfEquipments;
-        CurrentAmountOfEquipments++;
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Equipment name cannot be empty!");
+        
+        if (itemStatus == Status.None)
+            throw new ArgumentException("Equipment status cannot be None!");
+        
         this.Name = name;
         this.ItemStatus = itemStatus;
-        
+        this.Id = CurrentAmountOfEquipments;
+        CurrentAmountOfEquipments++;
         _extension.Add(this);
     }
 
