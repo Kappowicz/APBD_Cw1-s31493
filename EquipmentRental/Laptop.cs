@@ -4,7 +4,7 @@ public class Laptop : Equipment
 {
     private string _processorName;
     private int _amountOfRamGB;
-    public Laptop(string name, Status status, string processorName, int amountOfRamGB) : base(name, status)
+    public Laptop(string name, string processorName, int amountOfRamGB) : base(name)
     {
         if (string.IsNullOrWhiteSpace(processorName))
             throw new ArgumentException("Processor name cannot be empty!");

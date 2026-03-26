@@ -15,24 +15,46 @@ public abstract class Equipment
     private static List<Equipment> _extension = new();
     protected string Name;
     protected readonly int Id;
-    protected Status ItemStatus;
+    protected Status ItemStatus = Status.Available;
+
+    //user who borrowed this equipment, can be null if available
+    protected User? Renter;
     
-    protected Equipment(string name, Status itemStatus)
+    protected Equipment(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Equipment name cannot be empty!");
         
-        if (itemStatus == Status.None)
-            throw new ArgumentException("Equipment status cannot be None!");
-        
         this.Name = name;
-        this.ItemStatus = itemStatus;
         this.Id = _currentAmountOfEquipments;
         _currentAmountOfEquipments++;
         
         _extension.Add(this);
     }
 
+    public void SetRenter(User renter)
+    {
+        if (Renter != null)
+            throw new Exception("This equipment is already rented!");
+        
+        Renter = renter;
+    }
+
+    public void SetAsInRepair()
+    {
+        if (Renter != null)
+        {
+            Renter.Return(this);
+        }
+        
+        ItemStatus = Status.InRepair;
+    }
+    
+    public string GetUniqueName()
+    {
+        return $"{Name}_{Id}";
+    }
+    
     public static void PrintExtension()
     {
         foreach (var eq in _extension)
@@ -54,6 +76,6 @@ public abstract class Equipment
 
     public override string ToString()
     {
-        return $"Equipment qualified as {Name} with unique id: {Id} and status: {ItemStatus}";
+        return $"Equipment qualified as {Name} with unique id: {Id} and status: {ItemStatus} with renter: {Renter.GetUniqueName()}";
     }
 }

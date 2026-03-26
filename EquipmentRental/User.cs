@@ -9,6 +9,7 @@ public abstract class User
     
     private static List<User> _extension = new();
     protected int MaxAmountOfRents;
+    protected List<Equipment> RentedEquipments = new();
     
     protected User(string name, string surname)
     {
@@ -25,6 +26,28 @@ public abstract class User
         
         _extension.Add(this);
     }
+
+    public string GetUniqueName()
+    {
+        return $"{Name}_{Id}";
+    }
+
+    public void Rent(Equipment equipment)
+    {
+        if (RentedEquipments.Count >= MaxAmountOfRents)
+            throw new Exception("Max amount of rents reached!");
+        
+        RentedEquipments.Add(equipment);
+        equipment.SetRenter(this);
+    }
+
+    public void Return(Equipment equipment)
+    {
+        if (!RentedEquipments.Contains(equipment))
+            throw new Exception("No rented equipment found!");
+        
+        RentedEquipments.Remove(equipment);
+    }
     
     public static void PrintExtension()
     {
@@ -36,6 +59,7 @@ public abstract class User
     
     public override string ToString()
     {
-        return $"User qualified as {GetType().Name} with unique id: {Id} and name: {Name} {Surname}";
+        string rentedEquipmentsList = string.Join(", ", RentedEquipments.Select(e => e.GetUniqueName()));
+        return $"User qualified as {GetType().Name} with unique id: {Id} and name: {Name} {Surname} with borrowed items: {rentedEquipmentsList}";
     }
 }

@@ -1,14 +1,19 @@
 ﻿using EquipmentRental;
-/*
-Laptop laptop = new("thinkpad", Equipment.Status.Available, "intel", 32);
-Laptop laptop2 = new("thinkpad", Equipment.Status.Rented, "amd", 4);
-Laptop laptop3 = new("thinkpad", Equipment.Status.Available, "amd", 16);
 
-Equipment.PrintExtension();
-
-Equipment.PrintExtension(Equipment.Status.Available);
-*/
 Student student = new Student("jan", "kowalski");
 Student student2 = new Student("jan2", "kowalski");
 Student student3 = new Student("jan3", "kowalski");
+
+Laptop laptop = new("thinkpad", "intel", 32);
+Laptop laptop2 = new("thinkpad", "amd", 4);
+Laptop laptop3 = new("thinkpad", "amd", 16);
+
+student.Rent(laptop);
+student.Rent(laptop2);
+student2.Rent(laptop);
+
 User.PrintExtension();
+
+//Equipment.PrintExtension();
+
+//Equipment.PrintExtension(Equipment.Status.Available);
