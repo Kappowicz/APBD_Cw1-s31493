@@ -10,7 +10,7 @@ public abstract class Equipment
         InRepair,
     }
     //used as an id of specific equipment, in the end should equal to length of _extensions list
-    public static int CurrentAmountOfEquipments;
+    private static int _currentAmountOfEquipments = 0;
 
     private static List<Equipment> _extension = new();
     protected string Name;
@@ -27,8 +27,9 @@ public abstract class Equipment
         
         this.Name = name;
         this.ItemStatus = itemStatus;
-        this.Id = CurrentAmountOfEquipments;
-        CurrentAmountOfEquipments++;
+        this.Id = _currentAmountOfEquipments;
+        _currentAmountOfEquipments++;
+        
         _extension.Add(this);
     }
 
