@@ -8,9 +8,8 @@ Laptop laptop = new("thinkpad", "intel", 32);
 Laptop laptop2 = new("thinkpad", "amd", 4);
 Laptop laptop3 = new("thinkpad", "amd", 16);
 
-student.Rent(laptop);
-student.Rent(laptop2);
-student2.Rent(laptop);
+Rental rental = new(student, laptop, new DateTime(2020, 01, 01));
+rental.Return(new DateTime(2020, 02, 01));
 
 User.PrintExtension();
 

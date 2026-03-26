@@ -7,8 +7,10 @@ public abstract class User
     protected readonly string Surname;
     private static int _currentAmountOfUsers = 0;
     
+    
     private static List<User> _extension = new();
-    protected int MaxAmountOfRents;
+    protected int MaxAmountOfRents = 0;
+    protected int DailyPenaltyRate = 0;
     protected List<Equipment> RentedEquipments = new();
     
     protected User(string name, string surname)
@@ -32,6 +34,11 @@ public abstract class User
         return $"{Name}_{Id}";
     }
 
+    public int GetDailyPenaltyRate()
+    {
+        return DailyPenaltyRate;
+    }
+    
     public void Rent(Equipment equipment)
     {
         if (RentedEquipments.Count >= MaxAmountOfRents)
