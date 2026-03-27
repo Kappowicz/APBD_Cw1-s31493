@@ -12,6 +12,7 @@ public class Rental
 
     public Rental(User renter, Equipment rentedEquipment, DateTime startDate, int allowedRentalDays = 10)
     {
+        //TODO: refactor this
         _renter = renter;
         RentedEquipment = rentedEquipment;
         renter.Rent(rentedEquipment);

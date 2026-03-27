@@ -1,3 +1,4 @@
+using EquipmentRental.Enums;
 using EquipmentRental.Exceptions;
 using EquipmentRental.Models;
 
@@ -9,9 +10,9 @@ public class RentalService : IRentalService
     
     public void CreateRental(User renter, Equipment equipment, DateTime start)
     {
-        if (equipment.ItemStatus != Equipment.Status.Available)
+        if (equipment.ItemStatus != EquipmentStatus.Available)
         {
-            if (equipment.ItemStatus == Equipment.Status.Rented)
+            if (equipment.ItemStatus == EquipmentStatus.Rented)
             {
                 throw new EquipmentAlreadyRentedException(equipment.Id);
             }
@@ -42,7 +43,7 @@ public class RentalService : IRentalService
         rental.RentedEquipment.ReturnWorkingEquipment();
     }
     
-    public void EndRentalWithRepair(int rentalId)
+    public void EndRentalWithRepairNeeded(int rentalId)
     {
         var rental = _rentals.FirstOrDefault(rental => rental.Id == rentalId) ?? throw new RentalNotFoundException(rentalId);
         

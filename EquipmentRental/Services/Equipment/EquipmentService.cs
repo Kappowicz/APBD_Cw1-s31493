@@ -1,3 +1,4 @@
+using EquipmentRental.Enums;
 using EquipmentRental.Models;
 
 namespace EquipmentRental.Services;
@@ -26,7 +27,7 @@ public class EquipmentService : IEquipmentService
         }
     }
     
-    public void PrintExtension(Equipment.Status requiredStatus)
+    public void PrintExtension(EquipmentStatus requiredStatus)
     {
         foreach (var eq in _equipments)
         {

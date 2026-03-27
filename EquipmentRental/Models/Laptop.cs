@@ -12,12 +12,12 @@ public class Laptop : Equipment
         if (amountOfRamGB <= 0)
             throw new ArgumentException("Laptop can't have no ram!");
         
-        this._processorName = processorName;
-        this._amountOfRamGB = amountOfRamGB;
+        _processorName = processorName;
+        _amountOfRamGB = amountOfRamGB;
     }
 
     public override string ToString()
     {
-        return base.ToString() + $" Type: Laptop with specs: processor {_processorName} with {_amountOfRamGB}GB RAM";
+        return base.ToString() + $" with specs: processor {_processorName} with {_amountOfRamGB}GB RAM";
     }
 }

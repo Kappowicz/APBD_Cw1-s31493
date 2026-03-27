@@ -53,8 +53,6 @@ public abstract class User
         RentedEquipments.Remove(equipment);
     }
     
-    
-    
     public override string ToString()
     {
         string rentedEquipmentsList = string.Join(", ", RentedEquipments.Select(e => e.GetUniqueName()));

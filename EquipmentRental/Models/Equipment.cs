@@ -1,22 +1,15 @@
+using EquipmentRental.Enums;
+
 namespace EquipmentRental.Models;
 
 public abstract class Equipment
 {
-    public enum Status
-    {
-        None = 0,
-        Available,
-        Rented,
-        RequiresRepair,
-        InRepair,
-    }
     //used as an id of specific equipment, in the end should equal to length of _extensions list
     private static int _currentAmountOfEquipments = 0;
 
-    private static List<Equipment> _extension = new();
     protected string Name;
     public readonly int Id;
-    public Status ItemStatus { get; protected set; }
+    public EquipmentStatus ItemStatus { get; protected set; }
 
     //user who borrowed this equipment, can be null if available
     protected User? Renter;
@@ -29,9 +22,7 @@ public abstract class Equipment
         this.Name = name;
         this.Id = _currentAmountOfEquipments;
         _currentAmountOfEquipments++;
-        ItemStatus = Status.Available;
-        
-        _extension.Add(this);
+        ItemStatus = EquipmentStatus.Available;
     }
 
     public void SetRenter(User renter)
@@ -40,20 +31,20 @@ public abstract class Equipment
             throw new Exception("This equipment is already rented!");
         
         Renter = renter;
-        ItemStatus = Status.Rented;
+        ItemStatus = EquipmentStatus.Rented;
     }
 
     //can set there status to broken
     public void ReturnWorkingEquipment()
     {
         Renter = null;
-        ItemStatus = Status.Available;
+        ItemStatus = EquipmentStatus.Available;
     }
 
     public void ReturnBrokenEquipment()
     {
         Renter = null;
-        ItemStatus = Status.RequiresRepair;
+        ItemStatus = EquipmentStatus.RequiresRepair;
     }
     
     public void SetAsInRepair()
@@ -63,7 +54,7 @@ public abstract class Equipment
             Renter.Return(this);
         }
         
-        ItemStatus = Status.InRepair;
+        ItemStatus = EquipmentStatus.InRepair;
     }
     
     public string GetUniqueName()
@@ -73,6 +64,6 @@ public abstract class Equipment
     
     public override string ToString()
     {
-        return $"Equipment qualified as {Name} with unique id: {Id} and status: {ItemStatus} with renter: {Renter?.GetUniqueName() ?? "None"}";
+        return $"Equipment qualified as {GetType().Name} {Name} with unique id: {Id} and status: {ItemStatus} with renter: {Renter?.GetUniqueName() ?? "None"}";
     }
 }

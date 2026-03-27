@@ -2,34 +2,33 @@
 using EquipmentRental.Services;
 using EquipmentRental.Services.Rental;
 
-Student student = new Student("jan", "kowalski");
-Student student2 = new Student("piotr", "nowak");
-Student student3 = new Student("kamil", "kowalczyk");
+var student = new Student("jan", "kowalski");
+var employee = new Employee("piotr", "nowak");
 
 IUserService userService = new UserService();
 userService.AddUser(student);
-userService.AddUser(student2);
-userService.AddUser(student3);
+userService.AddUser(employee);
 
-Laptop laptop = new("thinkpad", "intel", 32);
-Laptop laptop2 = new("xps", "amd", 4);
-Laptop laptop3 = new("macbook", "apple", 16);
+var laptop = new Laptop("thinkpad", "intel", 32);
+var projector = new Projector("xaomi", "led", 500);
+var camera = new Camera("sony", 10.2, 16);
 
 IEquipmentService equipmentService = new EquipmentService();
 equipmentService.AddEquipment(laptop);
-equipmentService.AddEquipment(laptop2);
-equipmentService.AddEquipment(laptop3);
+equipmentService.AddEquipment(projector);
+equipmentService.AddEquipment(camera);
 
 IRentalService rentalService = new RentalService();
 rentalService.CreateRental(student, laptop, new DateTime(2020, 01, 01));
 
 //there penalty will be applied, because 2026 - 2020 to days is bigger than students possible rent duration
-rentalService.EndRentalWithRepair(0);
+rentalService.EndRentalWithRepairNeeded(0);
+laptop.SetAsInRepair();
 
 //renting not available (repairRequired) equipment error
 try
 {
-    rentalService.CreateRental(student2, laptop, new DateTime(2127, 01, 02));
+    rentalService.CreateRental(employee, laptop, new DateTime(2127, 01, 02));
 }
 catch (Exception e)
 {
@@ -39,8 +38,8 @@ catch (Exception e)
 //renting already rented equipment error
 try
 {
-    rentalService.CreateRental(student, laptop2, new DateTime(2020, 01, 01));
-    rentalService.CreateRental(student2, laptop2, new DateTime(2127, 01, 02));
+    rentalService.CreateRental(student, projector, new DateTime(2020, 01, 01));
+    rentalService.CreateRental(employee, projector, new DateTime(2127, 01, 02));
 }
 catch (Exception e)
 {
