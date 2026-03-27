@@ -58,6 +58,6 @@ public abstract class User
     public override string ToString()
     {
         string rentedEquipmentsList = string.Join(", ", RentedEquipments.Select(e => e.GetUniqueName()));
-        return $"User qualified as {GetType().Name} with unique id: {Id} and name: {Name} {Surname} with borrowed items: {rentedEquipmentsList}";
+        return $"User qualified as {GetType().Name} with unique name: {GetUniqueName()} with borrowed items: {rentedEquipmentsList}";
     }
 }

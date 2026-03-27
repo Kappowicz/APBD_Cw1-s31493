@@ -24,9 +24,9 @@ equipmentService.AddEquipment(laptop3);
 IRentalService rentalService = new RentalService();
 try
 {
-    Rental rental = new(student, laptop, new DateTime(2020, 01, 01));
-    rental.Return(new DateTime(2020, 02, 01));
-    Rental rental2 = new(student, laptop, new DateTime(2020, 01, 01));
+    rentalService.CreateRental(student, laptop, new DateTime(2020, 01, 01));
+    rentalService.EndRental(0);
+    rentalService.CreateRental(student2, laptop, new DateTime(2020, 01, 02));
 }
 catch (Exception e)
 {
@@ -35,6 +35,7 @@ catch (Exception e)
 
 userService.PrintExtension();
 equipmentService.PrintExtension();
+rentalService.PrintExtension();
 
 //Equipment.PrintExtension();
 

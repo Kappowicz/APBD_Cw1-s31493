@@ -29,7 +29,7 @@ public class Rental
         int amountOfDaysAfterReturn = (_actualReturnDate - _startDate).Days;
         if (amountOfDaysAfterReturn > _allowedRentalDays)
         {
-            Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * _renter.GetDailyPenaltyRate());
+            Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * _renter.GetDailyPenaltyRate() + " PLN");
         }
         
         _renter.Return(RentedEquipment);
