@@ -5,17 +5,17 @@ public class Rental
     public User _renter { get; }
     public int Id { get; private set; }
     private static int _currentAmountOfRentals = 0;
-    private Equipment _rentedEquipment;
+    public Equipment RentedEquipment { get; }
     private DateTime _startDate;
     private int _allowedRentalDays;
-    private DateTime _actualReturnDate;
+    private DateTime _actualReturnDate = DateTime.UnixEpoch;
 
     public Rental(User renter, Equipment rentedEquipment, DateTime startDate, int allowedRentalDays = 10)
     {
         _renter = renter;
-        _rentedEquipment = rentedEquipment;
+        RentedEquipment = rentedEquipment;
         renter.Rent(rentedEquipment);
-        _rentedEquipment.SetRenter(renter);
+        RentedEquipment.SetRenter(renter);
         _startDate = startDate;
         _allowedRentalDays = allowedRentalDays;
         Id = _currentAmountOfRentals;
@@ -32,11 +32,26 @@ public class Rental
             Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * _renter.GetDailyPenaltyRate());
         }
         
-        _renter.Return(_rentedEquipment);
+        _renter.Return(RentedEquipment);
     }
     
     public bool Overlaps(DateTime from, DateTime to)
     {
-        return !(_startDate > to || from > _actualReturnDate);
+        if (_actualReturnDate != DateTime.UnixEpoch)
+        {
+            return !(_startDate > to || from > _actualReturnDate);
+        }
+        
+        return !(_startDate > to);
+    }
+    
+    public bool Overlaps(DateTime from)
+    {
+        if (_actualReturnDate != DateTime.UnixEpoch)
+        {
+            return !(from > _actualReturnDate);
+        }
+
+        return false;
     }
 }

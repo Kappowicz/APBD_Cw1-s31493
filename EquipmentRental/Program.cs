@@ -1,6 +1,7 @@
 ﻿using EquipmentRental;
 using EquipmentRental.Models;
 using EquipmentRental.Services;
+using EquipmentRental.Services.Rental;
 
 Student student = new Student("jan", "kowalski");
 Student student2 = new Student("jan2", "kowalski");
@@ -20,6 +21,7 @@ equipmentService.AddEquipment(laptop);
 equipmentService.AddEquipment(laptop2);
 equipmentService.AddEquipment(laptop3);
 
+IRentalService rentalService = new RentalService();
 try
 {
     Rental rental = new(student, laptop, new DateTime(2020, 01, 01));

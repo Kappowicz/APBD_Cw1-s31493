@@ -10,7 +10,9 @@ public class RentalService : IRentalService
     public void CreateRental(User renter, Equipment equipment, DateTime start)
     {
         
-        throw new NotImplementedException();
+        bool rentalConflict = _rentals.Any(rental =>
+            rental.RentedEquipment == equipment
+            && rental.Overlaps(start));
     }
 
     public void EndRental(int rentalId)

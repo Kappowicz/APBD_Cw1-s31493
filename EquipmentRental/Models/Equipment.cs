@@ -39,6 +39,7 @@ public abstract class Equipment
             throw new Exception("This equipment is already rented!");
         
         Renter = renter;
+        ItemStatus = Status.Rented;
     }
 
     //can set there status to broken
@@ -69,8 +70,6 @@ public abstract class Equipment
         return $"{Name}_{Id}";
     }
     
-    
-
     public override string ToString()
     {
         return $"Equipment qualified as {Name} with unique id: {Id} and status: {ItemStatus} with renter: {Renter?.GetUniqueName() ?? "None"}";
