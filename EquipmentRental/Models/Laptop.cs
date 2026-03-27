@@ -1,4 +1,4 @@
-namespace EquipmentRental;
+namespace EquipmentRental.Models;
 
 public class Laptop : Equipment
 {

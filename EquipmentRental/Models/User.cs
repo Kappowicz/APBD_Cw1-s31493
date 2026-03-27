@@ -1,15 +1,15 @@
-namespace EquipmentRental;
+using EquipmentRental.Exceptions;
+
+namespace EquipmentRental.Models;
 
 public abstract class User
 {
-    protected readonly int Id;
+    public readonly int Id;
     protected readonly string Name;
     protected readonly string Surname;
     private static int _currentAmountOfUsers = 0;
     
-    
-    private static List<User> _extension = new();
-    protected int MaxAmountOfRents = 0;
+    public int MaxAmountOfRents {get; protected set;}
     protected int DailyPenaltyRate = 0;
     protected List<Equipment> RentedEquipments = new();
     
@@ -25,13 +25,11 @@ public abstract class User
         this.Surname = surname;
         this.Id = _currentAmountOfUsers;
         _currentAmountOfUsers++;
-        
-        _extension.Add(this);
     }
 
     public string GetUniqueName()
     {
-        return $"{Name}_{Id}";
+        return $"{Name}_{Surname}_{Id}";
     }
 
     public int GetDailyPenaltyRate()
@@ -42,10 +40,9 @@ public abstract class User
     public void Rent(Equipment equipment)
     {
         if (RentedEquipments.Count >= MaxAmountOfRents)
-            throw new Exception("Max amount of rents reached!");
+            throw new EquipmentAlreadyRentedException(equipment.Id);
         
         RentedEquipments.Add(equipment);
-        equipment.SetRenter(this);
     }
 
     public void Return(Equipment equipment)
@@ -56,13 +53,7 @@ public abstract class User
         RentedEquipments.Remove(equipment);
     }
     
-    public static void PrintExtension()
-    {
-        foreach (var usr in _extension)
-        {
-            Console.WriteLine(usr);
-        }
-    }
+    
     
     public override string ToString()
     {

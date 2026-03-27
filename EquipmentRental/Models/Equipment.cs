@@ -1,4 +1,4 @@
-namespace EquipmentRental;
+namespace EquipmentRental.Models;
 
 public abstract class Equipment
 {
@@ -7,6 +7,7 @@ public abstract class Equipment
         None = 0,
         Available,
         Rented,
+        RequiresRepair,
         InRepair,
     }
     //used as an id of specific equipment, in the end should equal to length of _extensions list
@@ -14,8 +15,8 @@ public abstract class Equipment
 
     private static List<Equipment> _extension = new();
     protected string Name;
-    protected readonly int Id;
-    protected Status ItemStatus = Status.Available;
+    public readonly int Id;
+    public Status ItemStatus { get; protected set; }
 
     //user who borrowed this equipment, can be null if available
     protected User? Renter;
@@ -40,6 +41,19 @@ public abstract class Equipment
         Renter = renter;
     }
 
+    //can set there status to broken
+    public void ReturnWorkingEquipment()
+    {
+        Renter = null;
+        ItemStatus = Status.Available;
+    }
+
+    public void ReturnBrokenEquipment()
+    {
+        Renter = null;
+        ItemStatus = Status.RequiresRepair;
+    }
+    
     public void SetAsInRepair()
     {
         if (Renter != null)
@@ -55,27 +69,10 @@ public abstract class Equipment
         return $"{Name}_{Id}";
     }
     
-    public static void PrintExtension()
-    {
-        foreach (var eq in _extension)
-        {
-            Console.WriteLine(eq);
-        }
-    }
     
-    public static void PrintExtension(Status requiredStatus)
-    {
-        foreach (var eq in _extension)
-        {
-            if (eq.ItemStatus == requiredStatus)
-            {
-                Console.WriteLine(eq);
-            }
-        }
-    }
 
     public override string ToString()
     {
-        return $"Equipment qualified as {Name} with unique id: {Id} and status: {ItemStatus} with renter: {Renter.GetUniqueName()}";
+        return $"Equipment qualified as {Name} with unique id: {Id} and status: {ItemStatus} with renter: {Renter?.GetUniqueName() ?? "None"}";
     }
 }
