@@ -2,7 +2,7 @@ namespace EquipmentRental.Models;
 
 public class Rental
 {
-    public User _renter { get; }
+    private User _renter;
     public int Id { get; private set; }
     private static int _currentAmountOfRentals = 0;
     public Equipment RentedEquipment { get; }

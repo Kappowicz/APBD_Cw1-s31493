@@ -13,7 +13,7 @@ public class RentalService : IRentalService
         {
             if (equipment.ItemStatus == Equipment.Status.Rented)
             {
-                throw new RentalConflictException(renter, equipment, start);
+                throw new EquipmentAlreadyRentedException(equipment.Id);
             }
             throw new EquipmentNotAvailableException(equipment.Id);
         }

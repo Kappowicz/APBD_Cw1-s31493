@@ -23,10 +23,10 @@ equipmentService.AddEquipment(laptop3);
 IRentalService rentalService = new RentalService();
 rentalService.CreateRental(student, laptop, new DateTime(2020, 01, 01));
 
-//there penalty will be applied
+//there penalty will be applied, because 2026 - 2020 to days is bigger than students possible rent duration
 rentalService.EndRentalWithRepair(0);
 
-//renting not available equipment error
+//renting not available (repairRequired) equipment error
 try
 {
     rentalService.CreateRental(student2, laptop, new DateTime(2127, 01, 02));
