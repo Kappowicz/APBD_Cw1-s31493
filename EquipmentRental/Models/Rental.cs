@@ -36,16 +36,6 @@ public class Rental
         RentedEquipment.ReturnWorkingEquipment();
     }
     
-    public bool Overlaps(DateTime from, DateTime to)
-    {
-        if (_actualReturnDate != DateTime.UnixEpoch)
-        {
-            return !(_startDate > to || from > _actualReturnDate);
-        }
-        
-        return !(_startDate > to);
-    }
-    
     public bool Overlaps(DateTime from)
     {
         if (_actualReturnDate != DateTime.UnixEpoch)
@@ -58,7 +48,7 @@ public class Rental
 
     public override string ToString()
     {
-        //TODO: fix epoch error
-        return $"Renter: {_renter.GetUniqueName()} rented: {RentedEquipment.GetUniqueName()} from: {_startDate} to: {_actualReturnDate}";
+        string outputReturnDate = _actualReturnDate == DateTime.UnixEpoch ? "still rented" : _actualReturnDate.ToShortDateString();
+        return $"Renter: {_renter.GetUniqueName()} rented: {RentedEquipment.GetUniqueName()} from: {_startDate} to: {outputReturnDate}";
     }
 }
