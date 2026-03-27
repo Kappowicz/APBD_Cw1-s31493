@@ -33,6 +33,7 @@ public class Rental
         }
         
         _renter.Return(RentedEquipment);
+        RentedEquipment.ReturnWorkingEquipment();
     }
     
     public bool Overlaps(DateTime from, DateTime to)
@@ -53,5 +54,11 @@ public class Rental
         }
 
         return false;
+    }
+
+    public override string ToString()
+    {
+        //TODO: fix epoch error
+        return $"Renter: {_renter.GetUniqueName()} rented: {RentedEquipment.GetUniqueName()} from: {_startDate} to: {_actualReturnDate}";
     }
 }

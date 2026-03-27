@@ -40,7 +40,7 @@ public abstract class User
     public void Rent(Equipment equipment)
     {
         if (RentedEquipments.Count >= MaxAmountOfRents)
-            throw new EquipmentAlreadyRentedException(equipment.Id);
+            throw new MaxRentedEquipmentCountException(equipment.Id);
         
         RentedEquipments.Add(equipment);
     }

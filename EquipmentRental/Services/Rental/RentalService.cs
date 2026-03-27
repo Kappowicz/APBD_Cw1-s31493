@@ -9,6 +9,14 @@ public class RentalService : IRentalService
     
     public void CreateRental(User renter, Equipment equipment, DateTime start)
     {
+        if (equipment.ItemStatus != Equipment.Status.Available)
+        {
+            if (equipment.ItemStatus == Equipment.Status.Rented)
+            {
+                throw new RentalConflictException(renter, equipment, start);
+            }
+            throw new EquipmentNotAvailableException(equipment.Id);
+        }
         
         bool rentalConflict = _rentals.Any(rental =>
             rental.RentedEquipment == equipment
@@ -18,15 +26,28 @@ public class RentalService : IRentalService
         {
             _rentals.Add(new Models.Rental(renter, equipment, start));
         }
+        else
+        {
+            throw new RentalConflictException(renter, equipment, start);
+        }
         
-        Console.WriteLine(rentalConflict);
+        //Console.WriteLine(rentalConflict);
     }
 
-    public void EndRental(int rentalId)
+    public void EndRentalWithoutRepair(int rentalId)
     {
         var rental = _rentals.FirstOrDefault(rental => rental.Id == rentalId) ?? throw new RentalNotFoundException(rentalId);
         
         rental.Return(DateTime.Now);
+        rental.RentedEquipment.ReturnWorkingEquipment();
+    }
+    
+    public void EndRentalWithRepair(int rentalId)
+    {
+        var rental = _rentals.FirstOrDefault(rental => rental.Id == rentalId) ?? throw new RentalNotFoundException(rentalId);
+        
+        rental.Return(DateTime.Now);
+        rental.RentedEquipment.ReturnBrokenEquipment();
     }
 
     public void PrintExtension()

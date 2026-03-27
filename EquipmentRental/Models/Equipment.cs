@@ -29,6 +29,7 @@ public abstract class Equipment
         this.Name = name;
         this.Id = _currentAmountOfEquipments;
         _currentAmountOfEquipments++;
+        ItemStatus = Status.Available;
         
         _extension.Add(this);
     }
