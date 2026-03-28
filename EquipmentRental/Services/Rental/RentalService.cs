@@ -31,8 +31,6 @@ public class RentalService : IRentalService
         {
             throw new RentalConflictException(renter, equipment, start);
         }
-        
-        //Console.WriteLine(rentalConflict);
     }
 
     public void EndRentalWithoutRepair(int rentalId)
@@ -56,6 +54,17 @@ public class RentalService : IRentalService
         foreach (var rental in _rentals)
         {
             Console.WriteLine(rental);
+        }
+    }
+
+    public void PrintOvedueRentals()
+    {
+        foreach (var rental in _rentals)
+        {
+            if ((DateTime.Today - rental.StartDate).Days > rental.AllowedRentalDays)
+            {
+                Console.WriteLine(rental);
+            }
         }
     }
 }

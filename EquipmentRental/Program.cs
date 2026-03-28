@@ -1,4 +1,5 @@
-﻿using EquipmentRental.Models;
+﻿using EquipmentRental.Enums;
+using EquipmentRental.Models;
 using EquipmentRental.Services;
 using EquipmentRental.Services.Rental;
 
@@ -25,6 +26,8 @@ rentalService.CreateRental(student, laptop, new DateTime(2020, 01, 01));
 rentalService.EndRentalWithRepairNeeded(0);
 laptop.SetAsInRepair();
 
+rentalService.CreateRental(student, projector, new DateTime(2025, 01, 01));
+
 //renting not available (repairRequired) equipment error
 try
 {
@@ -49,4 +52,6 @@ catch (Exception e)
 //print all data
 userService.PrintExtension();
 equipmentService.PrintExtension();
+equipmentService.PrintExtension(EquipmentStatus.Available);
 rentalService.PrintExtension();
+rentalService.PrintOvedueRentals();

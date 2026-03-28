@@ -8,4 +8,5 @@ public interface IRentalService
     public void EndRentalWithoutRepair(int rentalId);
     public void EndRentalWithRepairNeeded(int rentalId);
     public void PrintExtension();
+    public void PrintOvedueRentals();
 }

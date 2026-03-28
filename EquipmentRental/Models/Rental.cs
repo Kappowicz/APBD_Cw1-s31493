@@ -6,8 +6,8 @@ public class Rental
     public int Id { get; private set; }
     private static int _currentAmountOfRentals = 0;
     public Equipment RentedEquipment { get; }
-    private DateTime _startDate;
-    private int _allowedRentalDays;
+    public DateTime StartDate { get; }
+    public int AllowedRentalDays { get; set; }
     private DateTime _actualReturnDate = DateTime.UnixEpoch;
 
     public Rental(User renter, Equipment rentedEquipment, DateTime startDate, int allowedRentalDays = 10)
@@ -17,8 +17,8 @@ public class Rental
         RentedEquipment = rentedEquipment;
         renter.Rent(rentedEquipment);
         RentedEquipment.SetRenter(renter);
-        _startDate = startDate;
-        _allowedRentalDays = allowedRentalDays;
+        StartDate = startDate;
+        AllowedRentalDays = allowedRentalDays;
         Id = _currentAmountOfRentals;
         _currentAmountOfRentals++;
     }
@@ -27,8 +27,8 @@ public class Rental
     {
         _actualReturnDate = returnDate;
 
-        int amountOfDaysAfterReturn = (_actualReturnDate - _startDate).Days;
-        if (amountOfDaysAfterReturn > _allowedRentalDays)
+        int amountOfDaysAfterReturn = (_actualReturnDate - StartDate).Days;
+        if (amountOfDaysAfterReturn > AllowedRentalDays)
         {
             Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * _renter.GetDailyPenaltyRate() + " PLN");
         }
@@ -50,6 +50,6 @@ public class Rental
     public override string ToString()
     {
         string outputReturnDate = _actualReturnDate == DateTime.UnixEpoch ? "still rented" : _actualReturnDate.ToShortDateString();
-        return $"Renter: {_renter.GetUniqueName()} rented: {RentedEquipment.GetUniqueName()} from: {_startDate} to: {outputReturnDate}";
+        return $"Renter: {_renter.GetUniqueName()} rented: {RentedEquipment.GetUniqueName()} from: {StartDate} to: {outputReturnDate}";
     }
 }
