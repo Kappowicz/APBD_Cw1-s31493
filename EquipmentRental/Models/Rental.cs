@@ -2,21 +2,18 @@ namespace EquipmentRental.Models;
 
 public class Rental
 {
-    private User _renter;
+    public User Renter;
     public int Id { get; private set; }
     private static int _currentAmountOfRentals = 0;
     public Equipment RentedEquipment { get; }
     public DateTime StartDate { get; }
     public int AllowedRentalDays { get; set; }
-    private DateTime _actualReturnDate = DateTime.UnixEpoch;
+    public DateTime? ActualReturnDate = null;
 
-    public Rental(User renter, Equipment rentedEquipment, DateTime startDate, int allowedRentalDays = 10)
+    public Rental(User renter, Equipment rentedEquipment, DateTime startDate, int allowedRentalDays)
     {
-        //TODO: refactor this
-        _renter = renter;
+        Renter = renter;
         RentedEquipment = rentedEquipment;
-        renter.Rent(rentedEquipment);
-        RentedEquipment.SetRenter(renter);
         StartDate = startDate;
         AllowedRentalDays = allowedRentalDays;
         Id = _currentAmountOfRentals;
@@ -25,31 +22,28 @@ public class Rental
 
     public void Return(DateTime returnDate)
     {
-        _actualReturnDate = returnDate;
+        ActualReturnDate = returnDate;
 
-        int amountOfDaysAfterReturn = (_actualReturnDate - StartDate).Days;
+        int amountOfDaysAfterReturn = (returnDate - StartDate).Days;
         if (amountOfDaysAfterReturn > AllowedRentalDays)
         {
-            Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * _renter.GetDailyPenaltyRate() + " PLN");
+            Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * Renter.GetDailyPenaltyRate() + " PLN");
         }
-        
-        _renter.Return(RentedEquipment);
-        RentedEquipment.ReturnWorkingEquipment();
     }
     
     public bool Overlaps(DateTime from)
     {
-        if (_actualReturnDate != DateTime.UnixEpoch)
+        if (ActualReturnDate != null)
         {
-            return !(from > _actualReturnDate);
+            return !(from > ActualReturnDate);
         }
 
-        return false;
+        return true;
     }
 
     public override string ToString()
     {
-        string outputReturnDate = _actualReturnDate == DateTime.UnixEpoch ? "still rented" : _actualReturnDate.ToShortDateString();
-        return $"Renter: {_renter.GetUniqueName()} rented: {RentedEquipment.GetUniqueName()} from: {StartDate} to: {outputReturnDate}";
+        string outputReturnDate = ActualReturnDate != null ? ActualReturnDate.ToString() : "still rented";
+        return $"Renter: {Renter.GetUniqueName()} rented: {RentedEquipment.GetUniqueName()} from: {StartDate} to: {outputReturnDate}";
     }
 }

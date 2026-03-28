@@ -10,7 +10,7 @@ public class Projector : Equipment
             throw new ArgumentException("Projector light source name cannot be empty!");
         
         if (brightness <= 0)
-            throw new ArgumentException("Projector brightness can't have no ram!");
+            throw new ArgumentException("Projector brightness has to be positive number!");
         
         _lightSource = lightSource;
         _brightness = brightness;

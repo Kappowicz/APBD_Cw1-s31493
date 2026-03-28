@@ -22,13 +22,13 @@ equipmentService.AddEquipment(camera);
 IRentalService rentalService = new RentalService();
 rentalService.CreateRental(student, laptop, new DateTime(2020, 01, 01));
 
-//there penalty will be applied, because 2026 - 2020 to days is bigger than students possible rent duration
+Console.WriteLine("there penalty will be applied, because 2026 - 2020 to days is bigger than students possible rent duration");
 rentalService.EndRentalWithRepairNeeded(0);
 laptop.SetAsInRepair();
 
-rentalService.CreateRental(student, projector, new DateTime(2025, 01, 01));
+rentalService.CreateRental(student, projector, new DateTime(2026, 01, 01), 9999);
 
-//renting not available (repairRequired) equipment error
+Console.WriteLine("renting not available (repairRequired) equipment error");
 try
 {
     rentalService.CreateRental(employee, laptop, new DateTime(2127, 01, 02));
@@ -38,7 +38,7 @@ catch (Exception e)
     Console.WriteLine(e.Message);
 }
 
-//renting already rented equipment error
+Console.WriteLine("renting already rented equipment error");
 try
 {
     rentalService.CreateRental(student, projector, new DateTime(2020, 01, 01));
@@ -49,9 +49,13 @@ catch (Exception e)
     Console.WriteLine(e.Message);
 }
 
-//print all data
+Console.WriteLine("print userservice");
 userService.PrintExtension();
+Console.WriteLine("print equipmentservice");
 equipmentService.PrintExtension();
+Console.WriteLine("print available equipment");
 equipmentService.PrintExtension(EquipmentStatus.Available);
+Console.WriteLine("print rentalservice");
 rentalService.PrintExtension();
-rentalService.PrintOvedueRentals();
+Console.WriteLine("print overdue rentals");
+rentalService.PrintOverdueRentals();

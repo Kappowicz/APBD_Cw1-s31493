@@ -4,9 +4,9 @@ namespace EquipmentRental.Services.Rental;
 
 public interface IRentalService
 {
-    public void CreateRental(User renter, Equipment equipment, DateTime start);
+    public void CreateRental(User renter, Equipment equipment, DateTime start, int allowedRentalDays = 10);
     public void EndRentalWithoutRepair(int rentalId);
     public void EndRentalWithRepairNeeded(int rentalId);
     public void PrintExtension();
-    public void PrintOvedueRentals();
+    public void PrintOverdueRentals();
 }

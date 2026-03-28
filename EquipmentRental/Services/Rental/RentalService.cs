@@ -8,7 +8,7 @@ public class RentalService : IRentalService
 {
     private readonly List<Models.Rental> _rentals = [];
     
-    public void CreateRental(User renter, Equipment equipment, DateTime start)
+    public void CreateRental(User renter, Equipment equipment, DateTime start, int allowedRentalDays = 10)
     {
         if (equipment.ItemStatus != EquipmentStatus.Available)
         {
@@ -25,20 +25,23 @@ public class RentalService : IRentalService
 
         if (!rentalConflict)
         {
-            _rentals.Add(new Models.Rental(renter, equipment, start));
+            renter.Rent(equipment);
+            equipment.SetRenter(renter);
+            _rentals.Add(new Models.Rental(renter, equipment, start, allowedRentalDays));
         }
         else
         {
             throw new RentalConflictException(renter, equipment, start);
         }
     }
-
+    
     public void EndRentalWithoutRepair(int rentalId)
     {
         var rental = _rentals.FirstOrDefault(rental => rental.Id == rentalId) ?? throw new RentalNotFoundException(rentalId);
         
         rental.Return(DateTime.Now);
         rental.RentedEquipment.ReturnWorkingEquipment();
+        rental.Renter.Return(rental.RentedEquipment);
     }
     
     public void EndRentalWithRepairNeeded(int rentalId)
@@ -47,6 +50,7 @@ public class RentalService : IRentalService
         
         rental.Return(DateTime.Now);
         rental.RentedEquipment.ReturnBrokenEquipment();
+        rental.Renter.Return(rental.RentedEquipment);
     }
 
     public void PrintExtension()
@@ -57,11 +61,12 @@ public class RentalService : IRentalService
         }
     }
 
-    public void PrintOvedueRentals()
+    public void PrintOverdueRentals()
     {
         foreach (var rental in _rentals)
         {
-            if ((DateTime.Today - rental.StartDate).Days > rental.AllowedRentalDays)
+            DateTime compareAgainst = rental.ActualReturnDate?? DateTime.Now;
+            if ((compareAgainst - rental.StartDate).Days > rental.AllowedRentalDays)
             {
                 Console.WriteLine(rental);
             }
