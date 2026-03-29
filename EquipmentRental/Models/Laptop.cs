@@ -2,8 +2,8 @@ namespace EquipmentRental.Models;
 
 public class Laptop : Equipment
 {
-    private string _processorName;
-    private int _amountOfRamGB;
+    private string _processorName { get; }
+    private int _amountOfRamGB { get; }
     public Laptop(string name, string processorName, int amountOfRamGB) : base(name)
     {
         if (string.IsNullOrWhiteSpace(processorName))

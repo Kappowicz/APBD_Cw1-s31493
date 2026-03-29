@@ -1,7 +1,6 @@
 ﻿using EquipmentRental.Enums;
 using EquipmentRental.Models;
 using EquipmentRental.Services;
-using EquipmentRental.Services.Rental;
 
 var student = new Student("jan", "kowalski");
 var employee = new Employee("piotr", "nowak");
@@ -59,3 +58,5 @@ Console.WriteLine("print rentalservice");
 rentalService.PrintExtension();
 Console.WriteLine("print overdue rentals");
 rentalService.PrintOverdueRentals();
+
+//TODO: branches

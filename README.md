@@ -1,2 +1,2 @@
 # APBD_Cw1-s31493
-Uni project
+Simple console rental company managment software.

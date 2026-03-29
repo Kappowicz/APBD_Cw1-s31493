@@ -2,8 +2,8 @@ namespace EquipmentRental.Models;
 
 public class Camera : Equipment
 {
-    private double _sensorSize;
-    private int _fov;
+    private double _sensorSize { get; }
+    private int _fov { get; }
     public Camera(string name, double sensorSize, int fov) : base(name)
     {
         if (sensorSize <= 0)

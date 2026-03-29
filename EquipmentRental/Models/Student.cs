@@ -1,10 +1,7 @@
 namespace EquipmentRental.Models;
 
-public class Student : User
+public class Student(string name, string surname) : User(name, surname)
 {
-    public Student(string name, string surname) : base(name, surname)
-    {
-        MaxAmountOfRents = 2;
-        DailyPenaltyRate = 10;
-    }
+    public override int MaxAmountOfRents => 2;
+    public override int DailyPenaltyRate => 5;
 }

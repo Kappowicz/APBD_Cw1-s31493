@@ -7,12 +7,12 @@ public abstract class Equipment
     //used as an id of specific equipment, in the end should equal to length of _extensions list
     private static int _currentAmountOfEquipments = 0;
 
-    protected string Name;
-    public readonly int Id;
-    public EquipmentStatus ItemStatus { get; protected set; }
+    public string Name { get; }
+    public int Id { get; }
+    public EquipmentStatus ItemStatus { get; private set; }
 
-    //user who borrowed this equipment, can be null if available
-    protected User? Renter;
+    //user who borrowed this equipment, can be null if item is available
+    public User? Renter { get; private set; }
     
     protected Equipment(string name)
     {
@@ -57,10 +57,7 @@ public abstract class Equipment
         ItemStatus = EquipmentStatus.InRepair;
     }
     
-    public string GetUniqueName()
-    {
-        return $"{Name}_{Id}";
-    }
+    public string GetUniqueName() => $"{Name}_{Id}";
     
     public override string ToString()
     {

@@ -2,13 +2,14 @@ namespace EquipmentRental.Models;
 
 public class Rental
 {
-    public User Renter;
-    public int Id { get; private set; }
     private static int _currentAmountOfRentals = 0;
+    
+    public User Renter { get; }
+    public int Id { get; }
     public Equipment RentedEquipment { get; }
     public DateTime StartDate { get; }
-    public int AllowedRentalDays { get; set; }
-    public DateTime? ActualReturnDate = null;
+    public int AllowedRentalDays { get; }
+    public DateTime? ActualReturnDate { get; private set; }
 
     public Rental(User renter, Equipment rentedEquipment, DateTime startDate, int allowedRentalDays)
     {
@@ -27,7 +28,7 @@ public class Rental
         int amountOfDaysAfterReturn = (returnDate - StartDate).Days;
         if (amountOfDaysAfterReturn > AllowedRentalDays)
         {
-            Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * Renter.GetDailyPenaltyRate() + " PLN");
+            Console.WriteLine("Penalty applied: " + amountOfDaysAfterReturn * Renter.DailyPenaltyRate + " PLN");
         }
     }
     

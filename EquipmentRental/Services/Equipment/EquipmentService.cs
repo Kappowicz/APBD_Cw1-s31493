@@ -1,9 +1,8 @@
 using EquipmentRental.Enums;
 using EquipmentRental.Models;
-
-namespace EquipmentRental.Services;
 using EquipmentRental.Exceptions;
 
+namespace EquipmentRental.Services;
 
 public class EquipmentService : IEquipmentService
 {

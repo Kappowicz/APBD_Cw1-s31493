@@ -1,10 +1,7 @@
 namespace EquipmentRental.Models;
 
-public class Employee : User
+public class Employee(string name, string surname) : User(name, surname)
 {
-    public Employee(string name, string surname) : base(name, surname)
-    {
-        MaxAmountOfRents = 5;
-        DailyPenaltyRate = 1;
-    }
+    public override int MaxAmountOfRents => 5;
+    public override int DailyPenaltyRate => 1;
 }

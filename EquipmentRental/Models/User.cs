@@ -4,14 +4,14 @@ namespace EquipmentRental.Models;
 
 public abstract class User
 {
-    public readonly int Id;
-    protected readonly string Name;
-    protected readonly string Surname;
     private static int _currentAmountOfUsers = 0;
     
-    public int MaxAmountOfRents {get; protected set;}
-    protected int DailyPenaltyRate = 0;
-    protected List<Equipment> RentedEquipments = new();
+    public int Id { get; }
+    public abstract int MaxAmountOfRents { get; }
+    public abstract int DailyPenaltyRate { get; }
+    protected string Name { get; }
+    protected string Surname { get; }
+    protected List<Equipment> RentedEquipments { get; } = [];
     
     protected User(string name, string surname)
     {
@@ -21,21 +21,12 @@ public abstract class User
         if (string.IsNullOrWhiteSpace(surname))
             throw new ArgumentException("User surname cannot be empty!");
         
-        this.Name = name;
-        this.Surname = surname;
-        this.Id = _currentAmountOfUsers;
-        _currentAmountOfUsers++;
+        Name = name;
+        Surname = surname;
+        Id = ++_currentAmountOfUsers; //first id will be 1
     }
 
-    public string GetUniqueName()
-    {
-        return $"{Name}_{Surname}_{Id}";
-    }
-
-    public int GetDailyPenaltyRate()
-    {
-        return DailyPenaltyRate;
-    }
+    public string GetUniqueName() => $"{Name}_{Surname}_{Id}";
     
     public void Rent(Equipment equipment)
     {

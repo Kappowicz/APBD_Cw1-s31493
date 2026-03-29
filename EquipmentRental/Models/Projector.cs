@@ -2,8 +2,9 @@ namespace EquipmentRental.Models;
 
 public class Projector : Equipment
 {
-    private string _lightSource;
-    private int _brightness;
+    private string _lightSource { get; }
+    private int _brightness { get; }
+    
     public Projector(string name, string lightSource, int brightness) : base(name)
     {
         if (string.IsNullOrWhiteSpace(lightSource))

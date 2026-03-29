@@ -1,6 +1,6 @@
 using EquipmentRental.Models;
 
-namespace EquipmentRental.Services.Rental;
+namespace EquipmentRental.Services;
 
 public interface IRentalService
 {

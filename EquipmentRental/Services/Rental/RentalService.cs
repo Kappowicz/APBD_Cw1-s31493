@@ -2,11 +2,11 @@ using EquipmentRental.Enums;
 using EquipmentRental.Exceptions;
 using EquipmentRental.Models;
 
-namespace EquipmentRental.Services.Rental;
+namespace EquipmentRental.Services;
 
 public class RentalService : IRentalService
 {
-    private readonly List<Models.Rental> _rentals = [];
+    private readonly List<Rental> _rentals = [];
     
     public void CreateRental(User renter, Equipment equipment, DateTime start, int allowedRentalDays = 10)
     {
